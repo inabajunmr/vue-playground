@@ -6,14 +6,28 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="./app.js" defer></script>
+    <style>
+    
+    .red{
+        color:red
+    }
+    .blue{
+        color:blue
+    }
+
+    </style>
 </head>
 <body>
     <div id="test">
         <li>Message: {{ msg }}</li>
+        <li>Num + 10: {{ num + 10 }}</li>
+        <li>Num: {{ num }}</li>
         <li v-once>Message: {{ msg }}</li>
         <li v-once>Message: <span v-html="html"></span></li>
         <li v-once>Message: {{ html }}</li>
         <li v-bind:id="msg">TEST</li>
+        <li :class="color">COLOR</li>
+        <li v-if="visible">VISIBLE</li>
         <button v-bind:disabled="bool">Button</button>
     </div>
 </body>
