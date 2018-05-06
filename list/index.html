@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./app.js" defer></script>
+</head>
+<body>
+    <div id="app">
+            <li v-for="(item, index) in items">名前:{{ item.name }} インデックス:{{ index }}</li>
+            <li v-for="(item, index) of items">名前:{{ item.name }} インデックス:{{ index }}</li>
+            <li v-for="(val, key, index) in item">名前:{{ val }} キー:{{ key }} インデックス:{{ index }}</li>
+            <div>
+                <li v-for="(item) in items" :key="item.id">名前:{{ item.name }}<input></li>                
+            </div>
+            <div>
+                <li v-for="(item) in items">名前:{{ item.name }}<input></li>                
+            </div>
+            <div>{{ nest.value }}</div>
+            <li v-for="num in filterNumbers">{{ num }}</li>
+            <li v-for="num in filterValues">{{ num }}</li>
+    </div>
+</body>
+</html>
