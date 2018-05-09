@@ -111,4 +111,32 @@ var vm = new Vue({
 `vm.$set(vm.nest, "value", "aaaa")`でもいい（エイリアス）。
 
 ## 配列を返す算出プロパティによるループ
-// TODO なんか動かない
+
+```javascript
+var vm = new Vue({
+  el: '#app',
+  data:{
+    filterValues:[1,2,3,4,5]
+  },
+  computed:{
+    filterNumbers : function() {
+      return this.filterValues.filter(function(number){
+        return number < 4;
+      })
+    }
+  }
+})
+```
+
+```html
+<li v-for="num in filterNumbers">{{ num }}</li>
+```
+
+1,2,3がnumに代入される。
+
+## 範囲つきv-for
+```html
+<li v-for="num in 100">{{ num }}</li>
+```
+
+1〜100までがnumに代入される。

@@ -18,8 +18,8 @@ var vm = new Vue({
   },
   computed:{
     filterNumbers : function() {
-      this.filterValues.filter(function(number){
-        return number == 4;
+      return this.filterValues.filter(function(number){
+        return number < 4;
       })
     }
   }
