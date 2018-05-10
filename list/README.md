@@ -140,3 +140,29 @@ var vm = new Vue({
 ```
 
 1〜100までがnumに代入される。
+
+## テンプレートのv-for
+```html
+            <template v-for="item in items">
+                <li>{{ item.id }}</li>
+                <li>{{ item.name }}</li>
+            </template>
+```
+
+```javascript
+  data:{
+    items : [
+      {name : 'item1', id:1},
+      {name : 'item2', id:2},
+    ]
+  }
+```
+
+## v-forのループでに対して毎回v-ifが判定される
+```html
+            <template v-for="item in items" v-if="item.id === 1">
+                <li>{{ item.id }}</li>
+                <li>{{ item.name }}</li>
+            </template>
+```
+v-forで格納されたitemに対して毎回判定がかかる。
