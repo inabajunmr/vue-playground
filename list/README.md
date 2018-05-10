@@ -1,78 +1,169 @@
+
 # 条件付きレンダリング
-## v-onディレクティブ
+## v-forディレクティブ
+配列の要素数だけ反復する。
+
+### JS
+```javascript
+var vm = new Vue({
+  el: '#app',
+  data:{
+    items : [
+      {name : 'item1'},
+      {name : 'item2'},
+    ]
+  }
+})
+
+```
+
+### HTML
 ```html
     <div id="app">
-        <button v-on:click="counter += 1"></button>
-        <span>{{ counter }}</span>
+        <li v-for="item in items">{{ item.name }}</li>
     </div>
 ```
 
+itemにitemsの各要素が代入され参照できる。
+`in`は`of`でも良い。違いはよくわからない。
+
+### インデックスの参照
+v-forの第二引数でインデックスを参照できる。
+#### HTML
+```
+    <div id="app">
+        <li v-for="(item, index) in items">名前:{{ item.name }} インデックス:{{ index }}</li>
+    </div>
+```
+
+### 配列じゃなくてオブジェクトのプロパティに対しても反復できる
 ```javascript
 var vm = new Vue({
   el: '#app',
   data:{
-    counter:1
+    item: {
+      key1: "value1",
+      key2: "value2",
+      key3: "value3",
+    }
+
   }
 })
-```
-v-onに指定したイベントに対して関数が発火する。
 
-## メソッド呼び出し
+```
+```html
+            <li v-for="(val, key, index) in item">名前:{{ val }} キー:{{ key }} インデックス:{{ index }}</li>
+```
+
+この場合`v-for`の第二引数はキーの名前になる。第三引数はインデックス。インデックスの順序は保証されない。
+
+## key
 ```javascript
 var vm = new Vue({
   el: '#app',
   data:{
-    counter:1
+    items : [
+      {name : 'item1', id:1},
+      {name : 'item2', id:2},
+    ]
+  }
+})
+
+```
+
+```html
+<li v-for="(item) in items">名前:{{ item.name }}<input></li>                
+```
+このときitem.name=item1の`input`要素に何か入力した状態で、`vm.items.unshift({name:"item3", id:"3"})`すると、`item3`のlistの`input`に値が入力された状態になる。
+
+```html
+<li v-for="(item) in items" :key="item.id">名前:{{ item.name }}<input></li>                
+
+```
+とすると、子要素とkeyがセットで管理される？ので、`vm.items.unshift({name:"item3", id:"3"})`したあとも`item1`の`input`に値が入力された状態が保たれる。
+
+ * 配列に対する破壊的なメソッドに対して描画は追跡される。
+ * 配列の変数に別の配列を代入した際に、配列に同じオブジェクトが含まれている場合、リスト全体の再描画にならない。
+ * 配列のインデックスを指定して要素を変更したとき、Vueは変更を検出できない。
+ * 配列の長さを変更したとき、Vueは変更を検出できない。
+
+ ## プロパティの追加
+ ルートレベルのプロパティを追加することはできない。
+ ```html
+<div>{{ newValue }}</div>
+```
+にたいして、vm.newValue = "value"とかやってもだめ。
+
+すでにあるプロパティに要素を追加することはできる。
+```javascript
+var vm = new Vue({
+  el: '#app',
+  data:{
+    nest: {      
+    }
+  }
+})
+
+```
+```html
+            <div>{{ nest.value }}</div>
+```
+で、`Vue.set(vm.nest, "value", "aaaa")`を実行すると、`aaaa`が描画される。
+`vm.$set(vm.nest, "value", "aaaa")`でもいい（エイリアス）。
+
+## 配列を返す算出プロパティによるループ
+
+```javascript
+var vm = new Vue({
+  el: '#app',
+  data:{
+    filterValues:[1,2,3,4,5]
   },
-  methods:{
-    call: function(event){
-      alert("PeeHoo!");
-      if(event) {
-        alert(event.target.tagName);
-        alert(event.shiftKey);
-      }
+  computed:{
+    filterNumbers : function() {
+      return this.filterValues.filter(function(number){
+        return number < 4;
+      })
     }
   }
 })
 ```
 
 ```html
-        <button v-on:click="call">Call</button>
+<li v-for="num in filterNumbers">{{ num }}</li>
 ```
 
-[Eventインターフェース](https://developer.mozilla.org/ja/docs/Web/API/Event)
+1,2,3がnumに代入される。
 
-## 引数を指定
+## 範囲つきv-for
 ```html
-        <button v-on:click="echo('PeeHoo')">Echo</button>
+<li v-for="num in 100">{{ num }}</li>
 ```
+
+1〜100までがnumに代入される。
+
+## テンプレートのv-for
+```html
+            <template v-for="item in items">
+                <li>{{ item.id }}</li>
+                <li>{{ item.name }}</li>
+            </template>
+```
+
 ```javascript
-var vm = new Vue({
-  el: '#app',
-  methods:{
-    echo:function(value) {
-      alert(value);
-    }
+  data:{
+    items : [
+      {name : 'item1', id:1},
+      {name : 'item2', id:2},
+    ]
   }
-})
 ```
 
-イベントオブジェクトを参照したい場合は`$event`
-
+## v-forのループでに対して毎回v-ifが判定される
 ```html
-        <button v-on:click="echo('PeeHoo', $event)">Echo</button>
+            <template v-for="item in items" v-if="item.id === 1">
+                <li>{{ item.id }}</li>
+                <li>{{ item.name }}</li>
+            </template>
 ```
-```javascript
-var vm = new Vue({
-  el: '#app',
-  methods:{
-    echo:function(value, event) {
-      alert(value);
-      alert(event.shiftKey);
-    }
-  }
-})
-```
-
-
-// TODO イベント修飾子
+v-forで格納されたitemに対して毎回判定がかかる。
