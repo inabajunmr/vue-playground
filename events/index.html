@@ -11,11 +11,17 @@
     <div id="app">
         <button v-on:click="counter += 1">Add</button>
         <span>{{ counter }}</span>
-
         <button v-on:click="call">Call</button>
         <button v-on:click="echo('PeeHoo')">Echo</button>
         <button v-on:click="echo('PeeHoo', $event)">Echo and event</button>
-
+        <ul @click="echo('pee')">
+            <li @click="echo('hoo')">list1</li>
+            <li @click.stop="echo('hoo')">list2</li>
+        </ul>
+        <ul @click.capture="echo('pee')">
+            <li @click="echo('hoo')">list1</li>
+        </ul>
+        <input @keyup.enter="echo('pee')">
     </div>
 </body>
 </html>

@@ -74,5 +74,28 @@ var vm = new Vue({
 })
 ```
 
+## イベント修飾子
+```html
+        <ul @click="echo('pee')">
+            <li @click="echo('hoo')">list1</li>
+            <li @click.stop="echo('hoo')">list2</li>
+            <li @click.capture="echo('hoo')">list3</li>
+        </ul>
+```
+`@click.stop`によって伝播が止まるためlist2はpeeが出力されない。（list1はhooもpeeも出力）
 
-// TODO イベント修飾子
+```html
+        <ul @click.capture="echo('pee')">
+            <li @click="echo('hoo')">list1</li>
+        </ul>
+```
+`@click.capture`によってcaptureイベントが先に実行される。
+
+[キャプチャ/バブリングについての参考](https://qiita.com/hosomichi/items/49500fea5fdf43f59c58)
+
+## キー修飾子
+```html
+        <input @keyup.enter="echo('pee')">
+```
+
+フォームがフォーカスされてる状態でEnterを押すと発火する。
