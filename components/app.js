@@ -53,6 +53,24 @@ Vue.component('slot-sample', {
   `
 })
 
+Vue.component('A', {
+  template: `
+  <div>A</div> 
+  `
+})
+
+Vue.component('B', {
+  template: `
+  <div>B</div> 
+  `
+})
+
+
+Vue.component('trComponent', {
+  template: `
+  <tr><td>a</td><td>a</td><td>a</td><td>a</td><tr>
+  `
+})
 
 vm = new Vue({ 
   el: '#components-demo',
@@ -64,7 +82,8 @@ vm = new Vue({
     ],
     count : 0,
     text: "",
-    customValue: ""
+    customValue: "",
+    componentOpts: ""
   },
   methods: {
     echo: function(){
@@ -73,6 +92,17 @@ vm = new Vue({
     emittionMethod :function(value1, value2){
       alert(value1);
       alert(value2);
+    },
+    changeA: function(){
+      this.componentOpts = "A"
+    },
+    changeB: function(){
+      this.componentOpts = "B"
+    }
+  },
+  computed: {
+    selectComponent: function(){
+      return this.componentOpts;
     }
   }
 }

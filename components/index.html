@@ -34,6 +34,13 @@
         {{ customValue }}
         
         <slot-sample>SLOT!</slot-sample>
+
+        <button v-on:click="changeA"></button>
+        <button v-on:click="changeB"></button>
+        <component v-bind:is="selectComponent"></component>
+        <table>
+            <tr is="trComponent"></tr>
+        </table>
      </div>
 
 </body>

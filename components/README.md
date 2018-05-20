@@ -225,3 +225,55 @@ Vue.component('slot-sample', {
 
 
 ## v-bind:isによるコンポーネントの切り替え
+```javascript
+Vue.component('A', {
+  template: `
+  <div>A</div> 
+  `
+})
+
+Vue.component('B', {
+  template: `
+  <div>B</div> 
+  `
+})
+
+vm = new Vue({ 
+  el: '#components-demo',
+    changeA: function(){
+      this.componentOpts = "A"
+    },
+    changeB: function(){
+      this.componentOpts = "B"
+    }
+  },
+  computed: {
+    selectComponent: function(){
+      return this.componentOpts;
+    }
+  }
+})
+```
+
+```html
+        <component v-bind:is="selectComponent"></component>
+```
+
+selectComponentの結果とマッチするコンポーネントが表示される。タブとかに使える（[参考](https://jsfiddle.net/chrisvfritz/o3nycadu/)。
+
+
+## isによる警告の回避
+HTML自体の制約でコンポーネントのタグが使えないケースがある。例えばtableタグの配下に利用できるタグは決まっている。
+以下のように回避できる。
+```html
+        <table>
+            <tr is="trComponent"></tr>
+        </table>
+```
+
+これと同じと考えていい？（警告を回避できるということをのぞいて）
+```html
+        <table>
+            <trComponent></trComponent>
+        </table>
+```
