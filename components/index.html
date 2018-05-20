@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./app.js" defer></script>
+</head>
+<body>
+    <div id="components-demo">
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+        <ul>
+            <post value="post1"></post>
+            <post value="post2"></post>
+            <post value="post3"></post>
+        </ul>
+        <ul>
+            <postx v-for="post in posts" v-bind:value1="post.title" v-bind:value2="post.value"></postx>
+        </ul>
+        <div>
+            <emittion v-on:emittion="count++"></emittion>
+            {{ count }}
+        </div>
+        <div>
+            <emittion2 v-on:emittion2="count += $event"></emittion>
+        </div>
+        <div>
+            <emittion3 v-on:emittion3="emittionMethod"></emittion>
+        </div>
+
+        
+     </div>
+
+</body>
+</html>
