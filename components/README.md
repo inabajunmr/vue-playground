@@ -182,3 +182,46 @@ vm = new Vue({
   }
 })
 ```
+
+## コンポーネントにおけるv-model
+```html
+        <custom-input v-model="customValue"></custom-input>
+        {{ customValue }}
+```
+```javascript
+Vue.component('custom-input', {
+  props: ['value'],
+  template: `
+    <input
+      v-bind:value="value"
+      v-on:input="$emit('input', $event.target.value)"
+    >
+  `
+})
+
+```
+これで`v-model`が動作する。（この場合の`v-model`は以下のシンタックスシュガーになるのかな？）
+```html
+        <custom-input v-bind:value="customValue" @input="customValue = $event"></custom-input>
+        {{ customValue }}
+```
+要するにvalueをバインドしてinputイベントに入力値をemitしている。
+
+
+## slot
+```javascript
+Vue.component('slot-sample', {
+  template: `
+  <div>
+    <p><slot></slot></p>
+  </div> 
+  `
+})
+```
+```html
+        <slot-sample>SLOT!</slot-sample>
+```
+カスタム要素の子要素を<slot>の値として利用できるだけ？
+
+
+## v-bind:isによるコンポーネントの切り替え

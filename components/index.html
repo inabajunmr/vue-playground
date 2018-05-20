@@ -30,7 +30,10 @@
             <emittion3 v-on:emittion3="emittionMethod"></emittion>
         </div>
 
+        <custom-input v-model="customValue"></custom-input>
+        {{ customValue }}
         
+        <slot-sample>SLOT!</slot-sample>
      </div>
 
 </body>

@@ -35,6 +35,25 @@ Vue.component('emittion3', {
   template: `<button v-on:click="$emit('emittion3', 100, 200)">EMIT</button>`,
 })
 
+Vue.component('custom-input', {
+  props: ['value'],
+  template: `
+    <input
+      v-bind:value="value"
+      v-on:input="$emit('input', $event.target.value)"
+    >
+  `
+})
+
+Vue.component('slot-sample', {
+  template: `
+  <div>
+    <p><slot></slot></p>
+  </div> 
+  `
+})
+
+
 vm = new Vue({ 
   el: '#components-demo',
   data: {
@@ -44,7 +63,8 @@ vm = new Vue({
       {title:"post3", value:"value3"}
     ],
     count : 0,
-    text: ""
+    text: "",
+    customValue: ""
   },
   methods: {
     echo: function(){
