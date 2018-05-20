@@ -2,7 +2,10 @@ var vm = new Vue({
   el: '#app',
   data:{
     test: "",
-    check: true
+    lazytest: "",
+    check: true,
+    picked: "Default"
+    
   },
   computed:{
     checkedValue: function() {

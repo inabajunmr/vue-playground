@@ -13,6 +13,11 @@
         <p>INPUT:{{ test }}</p>
         <input type="checkbox" v-model="check">
         <p>{{ checkedValue }}</p>
+        <input type="radio" v-model="picked" value="Test1"/>
+        <input type="radio" v-model="picked" value="Test2"/>
+        <p>RADIO: {{ picked }}</p>
+        <input v-model.lazy="lazytest">
+        <p>{{ lazytest }}</p>
 
     </div>
 </body>

@@ -1,5 +1,5 @@
 # フォーム入力バインディング
-## input
+## テキスト
 ```javascript
 var vm = new Vue({
   el: '#app',
@@ -34,3 +34,27 @@ formのvalue、checked、selectedの処理値はバインディングされな�
 ```
 
 チェックしてる時はYES、してないときはNO。
+
+## radio
+```html
+        <input type="radio" v-model="picked" value="Test1"/>
+        <input type="radio" v-model="picked" value="Test2"/>
+        <p>RADIO: {{ picked }}</p>
+```
+
+```javascript
+  data:{
+    test: "",
+    check: true,
+    picked: "Default"
+    
+  }
+```
+
+## lazy
+```html
+        <input v-model="test">
+        <p>INPUT:{{ test }}</p>
+```
+
+lazyをつけると`input`インベントではなく`change`イベントのタイミングでバインドされる。
