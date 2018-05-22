@@ -14,7 +14,7 @@
     <h1>TODO List</h1>
     <hr><hr>
     <button class="btn primary">Add card</button>
-        <card v-for="card in cards" v-bind:title="card.title" v-bind:tasks="card.tasks"></card>
+        <card v-for="card in cards" v-bind:card="card" :key="card.id"></card>
     </div>
 </body>
 </html>
