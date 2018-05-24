@@ -5,7 +5,7 @@ Vue.component('task', {
     template: `
     <div class="row task">
         <div class="1 col"><button class="btn" v-bind:class="{ done : task.done, primary : !task.done }" @click="ttask.done=!ttask.done">DONE</button></div>
-        <div class="1 col"><button class="btn">Delete</button></div>
+        <div class="1 col"><button class="btn" @click="deleteTask">Delete</button></div>
         <div class="11 col" v-show="!edit && ttask.title != ''" @click="edit=!edit"><h4>{{ task.title }}<hr v-bind:class="{ done : task.done }"></h4></div>
         <div class="11 col" v-show="edit || ttask.title == ''"><input class="card w-100" v-model="ttask.title" @blur="edit=!edit"><hr v-bind:class="{ done : task.done }"></div>
     </div>`,
@@ -16,6 +16,11 @@ Vue.component('task', {
             edit: false
         }
     },
+    methods: {
+        deleteTask: function() {
+            this.tcard.tasks.splice(this.tcard.tasks.indexOf(this.ttask), 1);
+        }
+    }
 })
 
 // Card
@@ -44,7 +49,8 @@ Vue.component('card', {
     }
 })
 
-taskId = 0;
+var taskId = 0;
+var cardId = 0;
 
 // Vue
 vm = new Vue({ 
@@ -56,14 +62,16 @@ vm = new Vue({
                     {title:"クレカ止める", done: true, id: taskId++},
                     {title:"再発行する", done: false, id: taskId++}
                 ],
-                title: "クレカ無くした"
+                title: "クレカ無くした",
+                id: cardId++
             },
             {
                 tasks: [
                     {title:"いっぱい頑張る", done: false, id: taskId++},
                     {title:"すごい頑張る", done: false, id: taskId++}
                 ],
-                title: "頑張る"
+                title: "頑張る",
+                id: cardId++
             }
     ]
       }
