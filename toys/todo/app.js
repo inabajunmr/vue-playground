@@ -6,19 +6,33 @@ Vue.component('task', {
     <div class="row task">
         <div class="1 col"><button class="btn" v-bind:class="{ done : task.done, primary : !task.done }" @click="ttask.done=!ttask.done">DONE</button></div>
         <div class="1 col"><button class="btn" @click="deleteTask">Delete</button></div>
-        <div class="11 col" v-show="!edit" @click="edit=!edit"><h4>{{ task.title }}<hr v-bind:class="{ done : task.done }"></h4></div>
-        <div class="11 col" v-show="edit"><input class="card w-100" v-model="ttask.title" @blur="edit=!edit"><hr v-bind:class="{ done : task.done }"></div>
+        <div class="11 col" v-show="!editable" @click="edit=!edit"><h4>{{ task.title }}<hr v-bind:class="{ done : task.done }"></h4></div>
+        <div class="11 col" v-show="editable"><input class="card w-100" v-model="ttask.title" @blur="edit=!edit"><hr v-bind:class="{ done : task.done }"></div>
     </div>`,
     data: function() {
         return {
             ttask: this.task,
             tcard: this.card,
-            edit: (this.task.title == '')
+            edit: false
         }
     },
     methods: {
         deleteTask: function() {
             this.tcard.tasks.splice(this.tcard.tasks.indexOf(this.ttask), 1);
+        }
+    },
+    computed: {
+        editable: function(){
+            if(this.edit) {
+                return true;
+            }
+
+            if(this.ttask.title == '') {
+                this.edit = true;
+                return true;
+            }
+
+            return this.edit;
         }
     }
 })
@@ -29,8 +43,8 @@ Vue.component('card', {
     template: `
     <div class="card">
     <div class="row">
-        <div class="11 col" v-show="!edit" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
-        <div class="11 col" v-show="edit"><input class="card w-100" v-model="tcard.title" @blur="edit=!edit"></div>
+        <div class="11 col" v-show="!editable" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
+        <div class="11 col" v-show="editable"><input class="card w-100" v-model="tcard.title" @blur="edit=!edit"></div>
         <div class="1 col"><button class="btn primary" @click="addTask">Add task</button></div>
         <div class="1 col"><button class="btn primary" @click="deleteCard">Remove Card</button></div>
     </div>
@@ -40,7 +54,7 @@ Vue.component('card', {
         return {
             tcard: this.card,
             tcards: this.cards,
-            edit: (this.card.title == '')
+            edit: false
         }
     },
     methods: {
@@ -49,6 +63,20 @@ Vue.component('card', {
         },
         deleteCard: function() {
             this.tcards.splice(this.tcards.indexOf(this.tcard), 1);
+        }
+    },
+    computed: {
+        editable: function(){
+            if(this.edit) {
+                return true;
+            }
+            
+            if(this.tcard.title == '') {
+                this.edit = true;
+                return true;
+            }
+
+            return this.edit;
         }
     }
 })
