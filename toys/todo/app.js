@@ -25,26 +25,30 @@ Vue.component('task', {
 
 // Card
 Vue.component('card', {
-    props:["card"],
+    props:["card", "cards"],
     template: `
     <div class="card">
     <div class="row">
         <div class="11 col" v-show="!edit" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
         <div class="11 col" v-show="edit"><input class="card w-100" v-model="tcard.title" @blur="edit=!edit"></div>
         <div class="1 col"><button class="btn primary" @click="addTask">Add task</button></div>
-        <div class="1 col"><button class="btn primary">Remove Card</button></div>
+        <div class="1 col"><button class="btn primary" @click="deleteCard">Remove Card</button></div>
     </div>
     <task v-for='task in card.tasks' v-bind:card="card" v-bind:task="task" :key="task.id"></task>
     </div>`,
     data: function() {
         return {
             tcard: this.card,
+            tcards: this.cards,
             edit: (this.card.title == '')
         }
     },
     methods: {
         addTask: function() {
             this.tcard.tasks.unshift({title:"", done: false, id: taskId++})
+        },
+        deleteCard: function() {
+            this.tcards.splice(this.tcards.indexOf(this.tcard), 1);
         }
     }
 })
