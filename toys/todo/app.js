@@ -29,7 +29,10 @@ Vue.component('task', {
         },
         changeStatus: function() {
             this.ttask.done=!this.ttask.done;
-            todo.save();
+            if(this.ttask.title != ''){
+                todo.save();
+            }
+
         }
     },
     computed: {
@@ -55,7 +58,7 @@ Vue.component('card', {
     <div class="card">
     <div class="row">
         <div class="11 col" v-show="!editable" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
-        <div class="11 col" v-show="editable"><input class="card w-100" v-model="tcard.title" @blur="edit=!edit"></div>
+        <div class="11 col" v-show="editable"><input class="card w-100" v-model="tcard.title" @blur="fixTitle"></div>
         <div class="1 col"><button class="btn primary" @click="addTask">Add task</button></div>
         <div class="1 col"><button class="btn primary" @click="deleteCard">Remove Card</button></div>
     </div>
@@ -70,13 +73,16 @@ Vue.component('card', {
     },
     methods: {
         addTask: function() {
-            this.tcard.tasks.unshift({title:"", done: false, id: taskId++});
-            todo.save();
+            this.tcard.tasks.unshift({title:"", done: false, id: uuidv4()});
+            // Not persist. Persist by input title.
         },
         deleteCard: function() {
             this.tcards.splice(this.tcards.indexOf(this.tcard), 1);
             todo.save();
-        }
+        },fixTitle: function() {
+            this.edit=!this.edit;
+            todo.save();
+        },
     },
     computed: {
         editable: function(){
@@ -94,26 +100,23 @@ Vue.component('card', {
     }
 })
 
-var taskId = 0;
-var cardId = 0;
-
 startCards = (localStorage.getItem("todo") != null) ? JSON.parse(localStorage.getItem("todo")) : {
     cards: [
         {
             tasks: [
-                {title:"クレカ止める", done: true, id: taskId++},
-                {title:"再発行する", done: false, id: taskId++}
+                {title:"クレカ止める", done: true, id: uuidv4()},
+                {title:"再発行する", done: false, id: uuidv4()}
             ],
             title: "クレカ無くした",
-            id: cardId++
+            id: uuidv4()
         },
         {
             tasks: [
-                {title:"いっぱい頑張る", done: false, id: taskId++},
-                {title:"すごい頑張る", done: false, id: taskId++}
+                {title:"いっぱい頑張る", done: false, id: uuidv4()},
+                {title:"すごい頑張る", done: false, id: uuidv4()}
             ],
             title: "頑張る",
-            id: cardId++
+            id: uuidv4()
         }
     ]
   }
@@ -125,9 +128,9 @@ vm = new Vue({
     methods: {
         addCard: function() {
             this.cards.unshift({
-                tasks: [{title:"", done: false, id: taskId++}],
+                tasks: [{title:"", done: false, id: uuidv4()}],
                 title: "",
-                id: cardId++
+                id: uuidv4()
             })
         }
     }
