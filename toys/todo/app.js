@@ -138,5 +138,24 @@ vm = new Vue({
 
 var todo = {};
 todo.save = function() {
-    localStorage.setItem("todo", JSON.stringify(vm.$data));
+    // remove card with empty title and no task
+    data = JSON.parse(JSON.stringify(vm.$data));
+    filteredCards = data.cards.filter(card => (!todo.emptyTitle(card) || card.tasks.filter(task => !todo.emptyTitle(task)).length != 0));
+
+    // remove task without title
+    filteredCards.forEach( function(card) {
+        card.tasks = card.tasks.filter(task => task.title != '');
+        if(card.tasks.length == 0){
+            card.tasks = [
+                {title:"", done: false, id: uuidv4()}
+            ]
+        }
+    });
+
+    data.cards = filteredCards;
+    localStorage.setItem("todo", JSON.stringify(data));
+}
+
+todo.emptyTitle = function(data){
+    return data.title == '';
 }
