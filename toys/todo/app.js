@@ -29,8 +29,8 @@ Vue.component('card', {
     template: `
     <div class="card">
     <div class="row">
-        <div class="11 col" v-show="!edit" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
-        <div class="11 col" v-show="edit"><input class="card w-100" v-model="tcard.title" @blur="edit=!edit"></div>
+        <div class="11 col" v-show="!edit" @click="edit=!edit && tcard.title != ''"><h4>{{ card.title }}</h4></div>
+        <div class="11 col" v-show="edit || tcard.title == ''"><input class="card w-100" v-model="tcard.title" @blur="edit=!edit"></div>
         <div class="1 col"><button class="btn primary" @click="addTask">Add task</button></div>
         <div class="1 col"><button class="btn primary">Remove Card</button></div>
     </div>
@@ -73,8 +73,17 @@ vm = new Vue({
                 title: "頑張る",
                 id: cardId++
             }
-    ]
-      }
+        ]
+      },
+    methods: {
+        addCard: function() {
+            this.cards.unshift({
+                tasks: [{title:"", done: false, id: taskId++}],
+                title: "",
+                id: cardId++
+            })
+        }
+    }
 })
   
   

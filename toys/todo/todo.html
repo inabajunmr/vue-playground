@@ -13,7 +13,7 @@
     <div class="c" id="components-todo">
     <h1>TODO List</h1>
     <hr><hr>
-    <button class="btn primary">Add card</button>
+    <button class="btn primary" @click="addCard">Add card</button>
         <card v-for="card in cards" v-bind:cards="cards" v-bind:card="card" :key="card.id"></card>
     </div>
 </body>
