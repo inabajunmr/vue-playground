@@ -9,7 +9,7 @@ Vue.component('task', {
         <div class="1 col"><button class="btn" v-bind:class="{ done : task.done, primary : !task.done }" @click="changeStatus">DONE</button></div>
         <div class="1 col"><button class="btn" @click="deleteTask">Delete</button></div>
         <div class="11 col" v-show="!editable" @click="edit=!edit"><h4>{{ task.title }}<hr v-bind:class="{ done : task.done }"></h4></div>
-        <div class="11 col" v-show="editable"><input class="card w-100" v-model="ttask.title" @blur="fixTitle"><hr v-bind:class="{ done : task.done }"></div>
+        <div class="11 col" v-show="editable"><input class="card w-100" v-model="ttask.title" @blur="fixTitle" ref="input"><hr v-bind:class="{ done : task.done }"></div>
     </div>`,
     data: function() {
         return {
@@ -38,6 +38,7 @@ Vue.component('task', {
     computed: {
         editable: function(){
             if(this.edit) {
+                this.$nextTick(() => this.$refs.input.focus())
                 return true;
             }
 
@@ -58,7 +59,7 @@ Vue.component('card', {
     <div class="card">
     <div class="row">
         <div class="10 col" v-show="!editable" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
-        <div class="10 col" v-show="editable"><input class="card w-100" v-model="tcard.title" @blur="fixTitle"></div>
+        <div class="10 col" v-show="editable"><input class="card w-100" v-model="tcard.title" @blur="fixTitle" ref="input"></div>
         <div class="1 col"><h4>{{ achievementRate }}</h4></div>
         <div class="1 col"><button class="btn primary" @click="addTask">Add task</button></div>
         <div class="1 col"><button class="btn primary" @click="deleteCard">Remove Card</button></div>
@@ -89,6 +90,7 @@ Vue.component('card', {
     computed: {
         editable: function(){
             if(this.edit) {
+                this.$nextTick(() => this.$refs.input.focus())
                 return true;
             }
             
