@@ -80,7 +80,8 @@ Vue.component('card', {
         deleteCard: function() {
             this.tcards.splice(this.tcards.indexOf(this.tcard), 1);
             todo.save();
-        },fixTitle: function() {
+        },
+        fixTitle: function() {
             this.edit=!this.edit;
             todo.save();
         },
