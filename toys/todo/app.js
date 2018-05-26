@@ -57,8 +57,9 @@ Vue.component('card', {
     template: `
     <div class="card">
     <div class="row">
-        <div class="11 col" v-show="!editable" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
-        <div class="11 col" v-show="editable"><input class="card w-100" v-model="tcard.title" @blur="fixTitle"></div>
+        <div class="10 col" v-show="!editable" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
+        <div class="10 col" v-show="editable"><input class="card w-100" v-model="tcard.title" @blur="fixTitle"></div>
+        <div class="1 col"><h4>{{ achievementRate }}</h4></div>
         <div class="1 col"><button class="btn primary" @click="addTask">Add task</button></div>
         <div class="1 col"><button class="btn primary" @click="deleteCard">Remove Card</button></div>
     </div>
@@ -96,6 +97,9 @@ Vue.component('card', {
             }
 
             return this.edit;
+        },
+        achievementRate: function(){
+            return this.tcard.tasks.filter(task => task.done).length + "/" + this.tcard.tasks.length;
         }
     }
 })
