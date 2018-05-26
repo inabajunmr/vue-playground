@@ -1,5 +1,5 @@
 # TODO
-なんのひねりもないTODOアプリ
+[なんのひねりもないTODOアプリ](https://inabajunmr.github.io/vue-playground/toys/todo/todo.html)
 
 # 仕様
  * card
@@ -13,6 +13,7 @@
    * 完了ステータスを編集できる
    * 消せる
 
-# CSS
-これ使う
-https://ajusa.github.io/lit/docs/lit.html
+# ライブラリ
+[lit | CSS](https://ajusa.github.io/lit/docs/lit.html)
+[node-uuid | uuid](https://github.com/kelektiv/node-uuid)
+
