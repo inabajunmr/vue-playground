@@ -14,6 +14,5 @@
    * 消せる
 
 # ライブラリ
-[lit | CSS](https://ajusa.github.io/lit/docs/lit.html)
-[node-uuid | uuid](https://github.com/kelektiv/node-uuid)
-
+ * [lit | CSS](https://ajusa.github.io/lit/docs/lit.html)
+ * [node-uuid | uuid](https://github.com/kelektiv/node-uuid)
