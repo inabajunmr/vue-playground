@@ -56,7 +56,7 @@ Vue.component('task', {
 Vue.component('card', {
     props:["card", "cards"],
     template: `
-    <div class="card">
+    <div class="card" v-bind:class="{ done_card: allAchievement}">
     <div class="row">
         <div class="10 col" v-show="!editable" @click="edit=!edit"><h4>{{ card.title }}</h4></div>
         <div class="10 col" v-show="editable"><input class="card w-100" v-model="tcard.title" @blur="fixTitle" ref="input"></div>
@@ -103,6 +103,9 @@ Vue.component('card', {
         },
         achievementRate: function(){
             return this.tcard.tasks.filter(task => task.done).length + "/" + this.tcard.tasks.length;
+        },
+        allAchievement: function(){
+            return this.tcard.tasks.filter(task => task.done).length == this.tcard.tasks.length;
         }
     }
 })
