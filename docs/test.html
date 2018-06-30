@@ -23,7 +23,7 @@ Vue.component('button-counter', {
     }
   },
   template: `<div><button v-on:click="count++">Add</button>
-    <span>Count:{{ count }}</span></div>`
+    <span>Count:{{ ( '000' + count ).slice( -3 ) }}</span></div>`
 })
 
 vm = new Vue({ 
